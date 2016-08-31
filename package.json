@@ -1,0 +1,25 @@
+{
+  "name": "unofficial-pokedex",
+  "version": "1.0.0",
+  "description": "An unofficial pokedex cataloging the first generation (151) Pokemon. Consumes the pokeapi at https://pokeapi.co/.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-html-replace": "^1.6.1",
+    "gulp-pug": "^3.0.4",
+    "gulp-react": "^3.1.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-stylus": "^2.5.0",
+    "gulp-uglify": "^2.0.0",
+    "gulp-watch": "^4.3.9",
+    "install": "^0.8.1",
+    "npm": "^3.10.6"
+  }
+}
