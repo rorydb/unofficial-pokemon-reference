@@ -38,14 +38,14 @@ gulp.task('distMarkup', () => {
 gulp.task('distStyles', () => {
     convertDistStyles();
 
-    return watch('src/styles/*.styl', () => {
+    return watch('src/styles/styles.styl', () => {
         convertDistStyles();
     });
 
     function convertDistStyles() {
         console.log("Stylus styles are go");
 
-        return gulp.src('src/styles/*.styl')
+        return gulp.src('src/styles/styles.styl')
             .pipe(sourcemaps.init())
             .pipe(stylus({
                 'include css': true

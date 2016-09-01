@@ -3,6 +3,7 @@ var Site = React.createClass({
     return (
       <div>
         <Pokeball />
+        <Pokedex />
       </div>
     );
   }

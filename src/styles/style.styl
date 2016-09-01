@@ -1,3 +1,7 @@
+// TODO: Break these out into separate files
+@import normalize
+
+
 @font-face
     font-family: 'pokemon_gbregular'
     src: url('../fonts/pokemon_gb-webfont.woff2') format('woff2'),
@@ -12,7 +16,6 @@
         box-sizing: inherit
 
 body
-    margin: 0
     font-size: 0.8em
     font-family: pokemon_gbregular
 
@@ -74,10 +77,13 @@ body
 
     &.moving .circle
         opacity: 0
-        
-#app
-    position: relative
-    z-index: 5
+
+.pokedex
+    ul
+        list-style-type: none
+        margin: 0
+        padding: 0
+
 
 @keyframes pulse {
     0%      { opacity: 0 }

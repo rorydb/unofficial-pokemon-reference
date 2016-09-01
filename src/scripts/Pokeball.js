@@ -12,9 +12,13 @@ var BottomHalf = React.createClass({
 
 var InnerCircle = React.createClass({
   showClickHint: function() {
-    setTimeout(function() {
+    var hint = setTimeout(function() {
       var circleMessage = document.querySelector('.circle small');
-      circleMessage.style.display = "inline";
+      if (circleMessage) {
+        circleMessage.style.display = "inline";
+      } else {
+        return;
+      }
     }, 3000);
   },
   componentDidMount: function() {
