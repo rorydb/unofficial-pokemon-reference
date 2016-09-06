@@ -38,7 +38,7 @@ gulp.task('distMarkup', () => {
 gulp.task('distStyles', () => {
     convertDistStyles();
 
-    return watch('src/styles/styles.styl', () => {
+    return watch('src/styles/style.styl', () => {
         convertDistStyles();
     });
 
