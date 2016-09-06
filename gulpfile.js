@@ -45,7 +45,7 @@ gulp.task('distStyles', () => {
     function convertDistStyles() {
         console.log("Stylus styles are go");
 
-        return gulp.src('src/styles/styles.styl')
+        return gulp.src('src/styles/style.styl')
             .pipe(sourcemaps.init())
             .pipe(stylus({
                 'include css': true
@@ -103,7 +103,7 @@ gulp.task('distReactScripts', () => {
 });
 
 gulp.task('distCopyData', () => {
-    return gulp.src('src/data/genOne.json')
+    return gulp.src(['src/data/*'])
 .pipe(gulp.dest('dist/data'));
 });
 

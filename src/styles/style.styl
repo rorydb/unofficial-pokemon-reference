@@ -1,6 +1,17 @@
 // TODO: Break these out into separate files
 @import normalize
 
+pokedexBackground = #606060
+infoBackground = #f8f8f8
+solidBorder = 2px solid black
+
+.clearfix:after
+     visibility: hidden
+     display: block
+     font-size: 0
+     content: " "
+     clear: both
+     height: 0
 
 @font-face
     font-family: 'pokemon_gbregular'
@@ -8,12 +19,6 @@
             url('../fonts/pokemon_gb-webfont.woff') format('woff')
     font-weight: normal
     font-style: normal
-
-*
-    box-sizing: border-box
-    
-    &:before, &:after 
-        box-sizing: inherit
 
 body
     font-size: 0.8em
@@ -79,11 +84,29 @@ body
         opacity: 0
 
 .pokedex
-    ul
-        list-style-type: none
-        margin: 0
-        padding: 0
+    background-color: pokedexBackground
+    max-width: 60em
+    margin: 0 auto
+    border: solidBorder
 
+    .pokemon-list
+        max-height: 50vh
+        list-style-type: none
+        padding: 0.25em
+        background: infoBackground
+        border: solidBorder
+        overflow: scroll
+
+        span
+            display: block
+
+        .name
+            display: block
+            text-align: right;
+
+    .pokemon-info
+        background: infoBackground
+        border: solidBorder
 
 @keyframes pulse {
     0%      { opacity: 0 }

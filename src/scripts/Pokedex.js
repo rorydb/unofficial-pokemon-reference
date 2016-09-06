@@ -4,7 +4,7 @@ var PokemonListEntry = React.createClass({
     name: React.PropTypes.string
   },
   render: function() {
-    return <li><span className="number">{this.props.id}</span> &mdash; {this.props.name}</li>
+    return <li><span className="number">{this.props.id}</span> <span className="name">{this.props.name}</span></li>
   }
 });
 
@@ -18,7 +18,7 @@ var PokemonList = React.createClass({
     } else if (num < 100) {
       return "0" + num;
     } else {
-      return num;
+      return num + "";
     }
   },
   render: function () {
@@ -26,10 +26,105 @@ var PokemonList = React.createClass({
     return (
       <ul className="pokemon-list">
         {this.props.listOfPokemon["pokemon"].map(function(entry) {
-          return <PokemonListEntry key={parseInt(entry.id)} id={self.leadingZeroes(entry.id)} name={entry.name}/>
+          return <PokemonListEntry key={parseInt(entry.id)} id={self.leadingZeroes(parseInt(entry.id))} name={entry.name}/>
         })}
       </ul>
     );
+  }
+});
+
+var PokePortrait = React.createClass({
+  propTypes: {
+    id: React.PropTypes.string.isRequired,
+    picture: React.PropTypes.string.isRequired,
+    name: React.PropTypes.string.isRequired
+  },
+  leadingZeroes: function(num) {
+    if (num < 10) {
+      return "00" + num;
+    } else if (num < 100) {
+      return "0" + num;
+    } else {
+      return num;
+    }
+  },
+  render: function() {
+    var self = this;
+    return (
+      <figure className="poke-portrait">
+        <img src={this.props.picture} alt={"Sprite of " + this.props.name} />
+        <figcaption>No. {this.leadingZeroes(parseInt(this.props.id))}</figcaption>
+      </figure>
+    )
+  }
+});
+
+var PokemonOverview = React.createClass({
+  propTypes: {
+    name: React.PropTypes.string.isRequired,
+    type: React.PropTypes.string.isRequired,
+    height: React.PropTypes.string.isRequired,
+    weight: React.PropTypes.string.isRequired
+  },
+  render: function() {
+    return (
+      <div className="overview">
+        <table>
+          <tbody>
+            <tr>
+              <td colSpan="2">{this.props.name.toUpperCase()}</td>
+            </tr>
+            <tr>
+              <td colSpan="2">{this.props.type.toUpperCase()}</td>
+            </tr>
+            <tr>
+              <td>HT</td>
+              <td>{this.props.height}</td>
+            </tr>
+            <tr>
+              <td>WT</td>
+              <td>{this.props.weight}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    );
+  }
+});
+
+var PokemonDescription = React.createClass({
+  propTypes: {
+    description: React.PropTypes.string.isRequired
+  },
+  render: function() {
+    return (
+      <div className="pokemon-description">
+        <p>{this.props.description}</p>
+      </div>
+    );
+  }
+});
+
+var PokemonInfo = React.createClass({
+  getInitialState: function() {
+    return {
+      "id": "1",
+      "name": "LorumIpsum",
+      "sprite": "data/sprites/1.png",
+      "type": "Water",
+      "height": "5'3\"",
+      "weight": "29.0 lb",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi illo impedit magni repellendus voluptatibus! Alias at eius facere. Consequuntur dolor eligendi ex illo illum laboriosam nulla odit quis vel veritatis!"
+    }
+  },
+  render: function() {
+    return (
+      <section className="pokemon-info">
+        <PokePortrait id={this.state.id} picture={this.state.sprite} name={this.state.name} />
+        <PokemonOverview name={this.state.name} type={this.state.type} height={this.state.height} weight={this.state.weight} />
+        <PokemonDescription description={this.state.description} />
+      </section>
+    )
   }
 });
 
@@ -59,8 +154,9 @@ var Pokedex = React.createClass({
   },
   render: function () {
     return (
-      <div className="pokedex">
+      <div className="pokedex clearfix">
         <PokemonList listOfPokemon={this.state.pokemon}/>
+        <PokemonInfo />
       </div>
     );
   }
