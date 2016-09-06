@@ -43,7 +43,7 @@ var Pokedex = React.createClass({
   componentDidMount: function() {
     var self = this;
 
-    xhr = new XMLHttpRequest();
+    var xhr = new XMLHttpRequest();
     xhr.open('GET', 'data/genOne.json');
     xhr.addEventListener('load', function() {
       self.setState({
