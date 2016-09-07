@@ -1,17 +1,10 @@
 // TODO: Break these out into separate files
 @import normalize
+@import grid12
 
 pokedexBackground = #606060
 infoBackground = #f8f8f8
 solidBorder = 2px solid black
-
-.clearfix:after
-     visibility: hidden
-     display: block
-     font-size: 0
-     content: " "
-     clear: both
-     height: 0
 
 @font-face
     font-family: 'pokemon_gbregular'
@@ -24,8 +17,14 @@ body
     font-size: 0.8em
     font-family: pokemon_gbregular
 
+figure
+    margin: 0
+    padding: 0
+
 .pokeball
-    position: relative
+    position: absolute
+    top: 0
+    left: 0
     cursor: pointer
     z-index: 10
     height: 100vh
@@ -44,6 +43,7 @@ body
         position: relative
         height: 50%
         width: 100%
+        background-color: #ffffff
         border-top: 20px solid black
         transform: translate3d(0,0,0)
         transition: transform .4s ease-in
@@ -85,12 +85,16 @@ body
 
 .pokedex
     background-color: pokedexBackground
-    max-width: 60em
+
     margin: 0 auto
     border: solidBorder
+    position: absolute
+    top: 50%
+    left: 50%
+    transform: translate3d(-50%,-50%,0)
 
     .pokemon-list
-        max-height: 50vh
+        height: 50vh
         list-style-type: none
         padding: 0.25em
         background: infoBackground
@@ -107,6 +111,8 @@ body
     .pokemon-info
         background: infoBackground
         border: solidBorder
+        margin-top: 1em
+        height: 50vh
 
 @keyframes pulse {
     0%      { opacity: 0 }

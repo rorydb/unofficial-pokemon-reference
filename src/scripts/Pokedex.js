@@ -24,7 +24,7 @@ var PokemonList = React.createClass({
   render: function () {
     var self = this;
     return (
-      <ul className="pokemon-list">
+      <ul className="pokemon-list col-xs-12 col-sm-4 col-sm-offset-1">
         {this.props.listOfPokemon["pokemon"].map(function(entry) {
           return <PokemonListEntry key={parseInt(entry.id)} id={self.leadingZeroes(parseInt(entry.id))} name={entry.name}/>
         })}
@@ -51,7 +51,7 @@ var PokePortrait = React.createClass({
   render: function() {
     var self = this;
     return (
-      <figure className="poke-portrait">
+      <figure className="poke-portrait col-xs-6">
         <img src={this.props.picture} alt={"Sprite of " + this.props.name} />
         <figcaption>No. {this.leadingZeroes(parseInt(this.props.id))}</figcaption>
       </figure>
@@ -68,7 +68,7 @@ var PokemonOverview = React.createClass({
   },
   render: function() {
     return (
-      <div className="overview">
+      <div className="overview col-xs-6">
         <table>
           <tbody>
             <tr>
@@ -98,7 +98,7 @@ var PokemonDescription = React.createClass({
   },
   render: function() {
     return (
-      <div className="pokemon-description">
+      <div className="pokemon-description col-xs-12">
         <p>{this.props.description}</p>
       </div>
     );
@@ -119,10 +119,14 @@ var PokemonInfo = React.createClass({
   },
   render: function() {
     return (
-      <section className="pokemon-info">
-        <PokePortrait id={this.state.id} picture={this.state.sprite} name={this.state.name} />
-        <PokemonOverview name={this.state.name} type={this.state.type} height={this.state.height} weight={this.state.weight} />
-        <PokemonDescription description={this.state.description} />
+      <section className="pokemon-info col-xs-12 col-sm-5 col-sm-offset-1">
+        <div className="row">
+          <PokePortrait id={this.state.id} picture={this.state.sprite} name={this.state.name} />
+          <PokemonOverview name={this.state.name} type={this.state.type} height={this.state.height} weight={this.state.weight} />
+        </div>
+        <div className="row">
+          <PokemonDescription description={this.state.description} />
+        </div>
       </section>
     )
   }
@@ -154,7 +158,7 @@ var Pokedex = React.createClass({
   },
   render: function () {
     return (
-      <div className="pokedex clearfix">
+      <div className="pokedex container">
         <PokemonList listOfPokemon={this.state.pokemon}/>
         <PokemonInfo />
       </div>
