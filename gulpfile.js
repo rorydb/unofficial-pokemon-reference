@@ -12,7 +12,8 @@ const uglify = require('gulp-uglify');
 const react = require('gulp-react');
 const concat = require('gulp-concat');
 
-
+const fs = require('fs');
+const request = require('request');
 /***************************
   For a staging environment
  ***************************/
@@ -103,10 +104,35 @@ gulp.task('distReactScripts', () => {
 });
 
 gulp.task('distCopyData', () => {
+    gulp.src(['src/data/sprites/*.png'])
+        .pipe(gulp.dest('dist/data/sprites'));
+
     return gulp.src(['src/data/*'])
-.pipe(gulp.dest('dist/data'));
+        .pipe(gulp.dest('dist/data'));
 });
 
+gulp.task('getImages', () => {
+    let numPokemon = 151;
+
+    for(var i = 1; i <= numPokemon; i++) {
+        let path = 'src/data/sprites/' + i + '.png';
+        let remoteImage = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + i + '.png';
+
+        fs.stat(path, function(err, stat) {
+            if (err === null) {
+                // we're good
+            }
+            else {
+                console.log("getting " + remoteImage);
+                request
+                    .get(remoteImage)
+                    .on('response', (response) => {
+                        response.pipe(fs.createWriteStream(path));
+                    });
+            }
+        });
+    }
+});
 
 /******************************
  For a production environment
@@ -116,6 +142,6 @@ gulp.task('distCopyData', () => {
 /**************
  Initializing
  **************/
-gulp.task('default', ['distMarkup', 'distStyles', 'distFonts', 'distVendorScripts', 'distReactScripts', 'distCopyData']);
+gulp.task('default', ['getImages', 'distMarkup', 'distStyles', 'distFonts', 'distVendorScripts', 'distReactScripts', 'distCopyData']);
 
 gulp.task('production');
