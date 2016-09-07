@@ -30,9 +30,8 @@ scripts necessary for a staging-environment friendly package.
 * [pokèapi](https://pokeapi.co/)
 
 ## TODO
-* Implement API calls
 * Create a gulp task for production environment
-* Create Pokèdex inspired interface for the data
+* ~~Create~~ Make a better looking Pokèdex inspired interface for the data
 * Implement caching of data (localstorage?)
 
 ## Legal
