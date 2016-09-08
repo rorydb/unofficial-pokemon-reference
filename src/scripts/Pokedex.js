@@ -47,13 +47,10 @@ var PokemonList = React.createClass({
     listOfPokemon: React.PropTypes.object
   },
   leadingZeroes: function(num) {
-    if (num < 10) {
-      return "00" + num;
-    } else if (num < 100) {
-      return "0" + num;
-    } else {
-      return num + "";
+    while (num.length < 3) {
+      num = "0" + num;
     }
+    return num;
   },
   render: function () {
     var self = this;
@@ -64,7 +61,7 @@ var PokemonList = React.createClass({
                     updatePokemon={self.props.updatePokemon}
                     key={parseInt(entry.id)}
                     id={entry.id}
-                    no={self.leadingZeroes(parseInt(entry.id))}
+                    no={self.leadingZeroes(entry.id)}
                     name={entry.name}
           />
         })}
@@ -80,15 +77,10 @@ var PokePortrait = React.createClass({
     name: React.PropTypes.string.isRequired
   },
   leadingZeroes: function(num) {
-    if (parseInt(num) === NaN) { return num; }
-
-    if (num < 10) {
-      return "00" + num;
-    } else if (num < 100) {
-      return "0" + num;
-    } else {
-      return num;
+    while (num.length < 3) {
+      num = "0" + num;
     }
+    return num;
   },
   render: function() {
     var self = this;
@@ -205,9 +197,18 @@ var Pokedex = React.createClass({
   },
 
   // TODO: Comment this
-  // TODO: Cache responses to localstorage
   updatePokemon: function(id) {
     var self = this;
+
+    if (localStorage.getItem(id)) {
+      self.setState({
+        currentPokemon: JSON.parse(localStorage.getItem(id))
+      });
+
+      return;
+    } else {
+
+    }
     var requestPath = "http://pokeapi.co/api/v2/pokemon/" + id;
 
     var pokemonRequest = new XMLHttpRequest();
@@ -226,6 +227,8 @@ var Pokedex = React.createClass({
         var description = resp.flavor_text_entries[resp.flavor_text_entries.length - 1].flavor_text;
 
         var pk = new Pokemon(pokemonDetails.id, pokemonDetails.name, pokemonDetails.types, pokemonDetails.height, pokemonDetails.weight, description);
+
+        localStorage.setItem(id,JSON.stringify(pk));
 
         self.setState({
           "currentPokemon": pk
