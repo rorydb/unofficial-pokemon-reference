@@ -162,27 +162,37 @@ var Pokedex = React.createClass({
     xhr.send();
   },
 
-  // TODO: Comment this
   updatePokemon: function(id) {
     var self = this;
+    var pokedex = document.querySelector('.pokedex');
 
+    // A selection has already been made, we need to finish loading it
+    if (pokedex.classList.contains('loading')) { return; }
+
+    // Create the overlay
+    pokedex.classList.add('loading');
+
+    // User has already viewed this data and it is cached in their local storage
     if (localStorage.getItem(id)) {
       self.setState({
         currentPokemon: JSON.parse(localStorage.getItem(id))
       });
 
+      pokedex.classList.remove('loading');
       return;
-    } else {
-
     }
-    var requestPath = "http://pokeapi.co/api/v2/pokemon/" + id;
 
+
+    // User's first time viewing this data, begin a call to the API
+    var requestPath = "http://pokeapi.co/api/v2/pokemon/" + id;
     var pokemonRequest = new XMLHttpRequest();
 
     pokemonRequest.open('GET', requestPath);
     pokemonRequest.addEventListener('load', function() {
+      // Responds with the id, name, types, height, and weight we need
       var pokemonDetails = JSON.parse(pokemonRequest.response);
 
+      // Get us the description to complete our collection of pokemon data
       var descriptionPath = "https://pokeapi.co/api/v2/pokemon-species/" + pokemonDetails.id;
       pokemonDescriptionRequest = new XMLHttpRequest();
 
@@ -192,13 +202,18 @@ var Pokedex = React.createClass({
 
         var description = resp.flavor_text_entries[resp.flavor_text_entries.length - 1].flavor_text;
 
+        // Data structure representing the pokemon
         var pk = new Pokemon(pokemonDetails.id, pokemonDetails.name, pokemonDetails.types, pokemonDetails.height, pokemonDetails.weight, description);
 
+        // Cache this in local storage
         localStorage.setItem(id,JSON.stringify(pk));
 
         self.setState({
           "currentPokemon": pk
         });
+
+        // remove overlay
+        pokedex.classList.remove('loading');
       });
 
       pokemonDescriptionRequest.send();
@@ -207,6 +222,7 @@ var Pokedex = React.createClass({
 
     pokemonRequest.addEventListener('error', function() {
       console.log("something went wrong")
+      pokedex.classList.remove('loading');
     });
 
     pokemonRequest.send();
